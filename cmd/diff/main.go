@@ -1,26 +1,28 @@
 package main
 
 import (
+	"fmt"
+	"image/jpeg"
 	"image/png"
-	"log"
 	"os"
 
 	"github.com/ieee0824/go-image-tools/diff"
 )
 
 func main() {
-	file0, _ := os.Open("test_0.png")
-	file1, _ := os.Open("test_1.png")
+	file0, _ := os.Open("test/test_0.jpg")
+	file1, _ := os.Open("test/test_1.jpg")
 
-	imgA, _ := png.Decode(file0)
-	imgB, _ := png.Decode(file1)
+	imgA, _ := jpeg.Decode(file0)
+	_ = imgA
+	imgB, _ := jpeg.Decode(file1)
+	_ = imgB
 
-	result, err := diff.Diff(imgA, imgB)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	r, _ := diff.DifferenceRatioColor(imgA, imgB)
+	d, _ := diff.Diff(imgA, imgB)
+
 	out, _ := os.Create("result.png")
+	png.Encode(out, d)
 
-	png.Encode(out, result)
-
+	fmt.Println(*r)
 }
