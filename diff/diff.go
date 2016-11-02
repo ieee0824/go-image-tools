@@ -106,5 +106,4 @@ func DifferenceRatioColor(imgA, imgB image.Image) (*float64, error) {
 	result /= float64((rect.Max.X - rect.Min.X) * (rect.Max.Y - rect.Min.Y))
 	result /= 4
 	return &result, nil
-
 }
